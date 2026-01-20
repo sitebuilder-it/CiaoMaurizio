@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CiaoMaurizio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: #000;
+  color: #f4f4f4;
+}
+
+.main-scroll {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.main-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.snap {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= MENU ================= */
+nav {
+  position: fixed;
+  top: 20px;
+  right: 28px;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+}
+
+nav.visible {
+  display: flex;
+}
+
+.menu-toggle {
+  width: 28px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-left: -10px;
+}
+
+.menu-toggle span {
+  height: 2px;
+  width: 100%;
+  background: #fff;
+  display: block;
+}
+
+nav ul {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-right: 22px;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: right center;
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  white-space: nowrap;
+}
+
+nav.open ul {
+  transform: scaleX(1);
+}
+
+nav a {
+  color: #f4f4f4;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+nav.invert a {
+  color: #000;
+}
+
+nav.invert .menu-toggle span {
+  background: #000;
+}
+
+/* ================= HERO ================= */
+.hero video {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+/* ================= INTRO ================= */
+.intro {
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+.intro-logo {
+  max-width: 300px;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+/* ================= REVIEWS ================= */
+.reviews {
+  background: #f4f4f4;
+  color: #000;
+  flex-direction: column;
+  text-align: center;
+  padding: 40px;
+}
+
+.review {
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+/* ================= VIDEO ================= */
+.video-reel iframe {
+  width: 100%;
+  height: 100vh;
+  border: none;
+}
+.video-reel {
+  width: 100%;
+  height: 100vh;
+}
+
+.snap > .video-reel {
+  align-self: stretch;
+}
+
+/* ================= PHOTO (REWRITTEN v2) ================= */
+.snap.photo {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.photo-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* shared */
+.photo-layer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-layer img {
+  height: 100vh;
+  object-fit: cover;
+}
+
+/* DESKTOP */
+@media (min-width: 769px) {
+  .photo-layer[data-pos="0"] {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .photo-layer[data-pos="-1"] {
+    left: 10%;
+    z-index: 1;
+  }
+
+  .photo-layer[data-pos="1"] {
+    right: 10%;
+    z-index: 1;
+  }
+
+  .photo-layer[data-pos="0"] img {
+    width: 40vw;
+  }
+
+  .photo-layer[data-pos="-1"] img,
+  .photo-layer[data-pos="1"] img {
+    width: 30vw;
+    opacity: 0.75;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .photo-layer {
+    left: 0;
+    width: 100vw;
+  }
+
+  .photo-layer img {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+/* arrows */
+.photo-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  color: #fff;
+  opacity: 0.3;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.photo-arrow.left { left: 14px; }
+.photo-arrow.right { right: 14px; }
+
+#photo {
+  cursor: grab;
+}
+
+#photo:active {
+  cursor: grabbing;
+}
+
+#photo img {
+  user-drag: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+#photo,
+#photo * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+#photo {
+  touch-action: pan-y;
+}
+
+#photo img {
+  pointer-events: none;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+
+/* ================= PODCAST ================= */
+.podcast-banner img,
+.podcast-reel iframe {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  border: none;
+}
+.podcast-reel {
+  width: 100%;
+  height: 100vh;
+}
+
+.snap > .podcast-reel {
+  align-self: stretch;
+}
+
+/* Podcast banner responsive images */
+.podcast-banner img.desktop {
+  display: block;
+}
+
+.podcast-banner img.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .podcast-banner img.desktop {
+    display: none;
+  }
+
+  .podcast-banner img.mobile {
+    display: block;
+  }
+}
+
+
+/* ================= CONTACT ================= */
+/* ================= CONTACT ================= */
+
+.contact-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0e0e0e;
+  color: #eaeaea;
+}
+
+.contact-container {
+  max-width: 520px;
+  width: 100%;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.contact-title {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.contact-email a {
+  color: #eaeaea;
+  text-decoration: none;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.contact-email a:hover {
+  opacity: 1;
+}
+
+.contact-intro {
+  margin: 24px 0 32px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* FORM */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-form select,
+.contact-form input,
+.contact-form textarea {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #eaeaea;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.contact-form textarea {
+  resize: none;
+}
+
+.contact-form select option {
+  background: #0e0e0e;
+  color: #eaeaea;
+}
+
+.contact-form button {
+  margin-top: 8px;
+  padding: 12px;
+  background: #eaeaea;
+  color: #0e0e0e;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+.contact-form button:hover {
+  opacity: 0.8;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 32px 20px;
+  }
+}
+/* ================= CONTACT – LIGHT THEME FIX ================= */
+
+.contact-section {
+  background: #f3f3f1; /* off-white, softer on eyes */
+  color: #111;
+}
+
+.contact-email a {
+  color: #111;
+}
+
+.contact-intro {
+  color: #222;
+}
+
+/* Move content slightly upward to avoid footer overlap */
+.contact-container {
+  transform: translateY(-40px);
+}
+
+/* FORM FIELDS */
+
+.contact-form select,
+.contact-form input,
+.contact-form textarea {
+  border: 1px solid rgba(0,0,0,0.25);
+  color: #111;
+}
+
+.contact-form select option {
+  background: #f3f3f1;
+  color: #111;
+}
+
+/* BUTTON */
+
+.contact-form button {
+  background: #111;
+  color: #f3f3f1;
+}
+
+.contact-form button:hover {
+  opacity: 0.85;
+}
+
+/* MOBILE ADJUSTMENT */
+
+@media (max-width: 768px) {
+  .contact-container {
+    transform: translateY(-20px);
+  }
+}
+
+/* ================= FOOTER ================= */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #111;
+  color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+}
+
+footer.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+</style>
+</head>
+
+<body>
+
+<nav id="menu">
+  <div class="menu-toggle" id="menuToggle">
+    <span></span><span></span><span></span>
+  </div>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#video1">Video</a></li>
+    <li><a href="#photo">Photo</a></li>
+    <li><a href="#podcast-banner">Podcast</a></li>
+    <li><a href="#contact">Contatti</a></li>
+  </ul>
+</nav>
+
+<div class="main-scroll" id="scroll">
+
+<section class="snap hero" id="hero">
+  <video autoplay muted loop playsinline>
+    <source src="background-mobile.mp4" media="(max-width: 768px)">
+    <source src="background.mp4">
+  </video>
+</section>
+
+<section class="snap intro" id="intro">
+  <img src="logo.png" class="intro-logo">
+  <h2>Videomaker, Editor, Podcaster</h2>
+</section>
+
+<section class="snap reviews">
+  <div class="review">“Affidabile e veloce”</div>
+  <div class="review">“Stra simpatico e una persona piacevole con cui lavorare”</div>
+  <div class="review">“Lavoro con Maurizio da anni, non mi ha mai deluso!”</div>
+</section>
+
+<section class="snap" id="video1">
+  <div class="video-reel">
+    <iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150154779?background=1&autoplay=1&loop=1&muted=1"></iframe>
+  </div>
+</section>
+
+<section class="snap">
+  <div class="video-reel">
+    <iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150155214?background=1&autoplay=1&loop=1&muted=1"></iframe>
+  </div>
+</section>
+
+<section class="snap">
+  <div class="video-reel">
+    <iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150160178?background=1&autoplay=1&loop=1&muted=1"></iframe>
+  </div>
+</section>
+
+<section class="snap">
+  <div class="video-reel">
+    <iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150165332?background=1&autoplay=1&loop=1&muted=1"></iframe>
+  </div>
+</section>
+
+<section class="snap photo" id="photo">
+  <div class="photo-arrow left">‹</div>
+
+  <div class="photo-viewport">
+    <div class="photo-layer" data-pos="-1"></div>
+    <div class="photo-layer" data-pos="0"></div>
+    <div class="photo-layer" data-pos="1"></div>
+  </div>
+
+  <div class="photo-arrow right">›</div>
+</section>
+
+
+<section class="snap" id="podcast-banner">
+  <div class="podcast-banner">
+    <img src="banner.jpg" class="desktop" alt="Podcast banner">
+    <img src="banner-mobile.jpg" class="mobile" alt="Podcast banner mobile">
+  </div>
+</section>
+<section class="snap">
+<div class="podcast-reel">
+<iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150165332?background=1&autoplay=1&loop=1&muted=1">
+</iframe>
+</div>
+</section>
+<section class="snap">
+<div class="podcast-reel">
+<iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150160178?background=1&autoplay=1&loop=1&muted=1">
+</iframe>
+</div>
+</section>
+<section class="snap"><div class="podcast-reel">
+<iframe class="vimeo-reel" src="https://player.vimeo.com/video/1150154779?background=1&autoplay=1&loop=1&muted=1">
+</iframe>
+</div>
+</section>
+
+<section class="snap contact-section" id="contact">
+  <div class="contact-container">
+    <h2 class="contact-title">Contatti</h2>
+
+    <p class="contact-email">
+      <a href="mailto:maurizio@ciaomaurizio.com">maurizio@ciaomaurizio.com</a>
+    </p>
+
+    <p class="contact-intro">
+      Vuoi sapere di più sui miei servizi?<br>
+      Hai una storia da raccontare?<br>
+      Contattami tramite il form qui sotto.
+    </p>
+
+    <form class="contact-form">
+      <select required>
+        <option disabled selected>Soggetto</option>
+        <option>Video</option>
+        <option>Photo</option>
+        <option>Podcast</option>
+      </select>
+
+      <input type="text" placeholder="Nome e Cognome" required>
+
+      <textarea rows="5" placeholder="Messaggio" required></textarea>
+
+      <button type="submit">Invia</button>
+    </form>
+  </div>
+</section>
+
+<footer id="footer">Instagram · YouTube</footer>
+
+</div>
+
+<script>
+const menu = document.getElementById('menu');
+const toggle = document.getElementById('menuToggle');
+const scroll = document.getElementById('scroll');
+const intro = document.getElementById('intro');
+const footer = document.getElementById('footer');
+const whiteSections = document.querySelectorAll('.reviews, .contact');
+
+toggle.onclick = () => menu.classList.toggle('open');
+
+scroll.addEventListener('scroll', () => {
+  menu.classList.remove('open');
+  menu.classList.toggle('visible', scroll.scrollTop >= intro.offsetTop - 10);
+
+  let invert = false;
+  whiteSections.forEach(sec => {
+    const r = sec.getBoundingClientRect();
+    if (r.top < window.innerHeight / 2 && r.bottom > window.innerHeight / 2) invert = true;
+  });
+  menu.classList.toggle('invert', invert);
+});
+
+new IntersectionObserver(([e]) => footer.classList.toggle('visible', e.isIntersecting), { threshold: 0.6 })
+  .observe(document.getElementById('contact'));
+
+/* ================= PHOTO JS (SCOPED) ================= */
+
+(() => {
+  const section = document.getElementById('photo');
+  if (!section) return;
+
+  const layers = section.querySelectorAll('.photo-layer');
+  const left = section.querySelector('.photo-arrow.left');
+  const right = section.querySelector('.photo-arrow.right');
+
+  const photos = [
+    'photos/photo1.jpg',
+    'photos/photo2.jpg',
+    'photos/photo3.jpg',
+    'photos/photo4.jpg',
+    'photos/photo5.jpg'
+  ];
+
+  let index = Number(sessionStorage.getItem('photoIndex')) || 0;
+
+  let startX = 0;
+  let startY = 0;
+  let dragging = false;
+  let moved = false;
+
+  /* prevent text / image selection */
+  section.style.userSelect = 'none';
+  section.style.webkitUserSelect = 'none';
+
+  function createImg(i) {
+    const img = document.createElement('img');
+    img.src = photos[(i + photos.length) % photos.length];
+    img.draggable = false;
+    return img;
+  }
+
+  function render() {
+    layers.forEach(l => (l.innerHTML = ''));
+
+    layers[0].appendChild(createImg(index - 1));
+    layers[1].appendChild(createImg(index));
+    layers[2].appendChild(createImg(index + 1));
+
+    sessionStorage.setItem('photoIndex', index);
+  }
+
+  function move(dir) {
+    index = (index + dir + photos.length) % photos.length;
+    render();
+  }
+
+  left.onclick = () => move(-1);
+  right.onclick = () => move(1);
+
+  section.addEventListener('pointerdown', e => {
+    startX = e.clientX;
+    startY = e.clientY;
+    dragging = true;
+    moved = false;
+    section.setPointerCapture(e.pointerId);
+  });
+
+  section.addEventListener('pointermove', e => {
+    if (!dragging || moved) return;
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    /* horizontal intent + small threshold */
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
+      move(dx < 0 ? 1 : -1);
+      moved = true;
+    }
+  });
+
+  section.addEventListener('pointerup', e => {
+    dragging = false;
+    moved = false;
+    section.releasePointerCapture(e.pointerId);
+  });
+
+  section.addEventListener('pointercancel', () => {
+    dragging = false;
+    moved = false;
+  });
+
+  render();
+})();
+</script>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script>
+const reels = document.querySelectorAll('.vimeo-reel');
+const players = new Map();
+
+reels.forEach(iframe => {
+  const player = new Vimeo.Player(iframe);
+  players.set(iframe, {
+    player,
+    ready: player.ready()
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    const data = players.get(entry.target);
+    if (!data) return;
+
+    data.ready.then(() => {
+      data.player.pause()
+        .then(() => data.player.setCurrentTime(0))
+        .then(() => data.player.play())
+        .catch(() => {});
+    });
+  });
+}, {
+  threshold: 0.85
+});
+
+reels.forEach(iframe => observer.observe(iframe));
+</script>
+
+
+</body>
+</html>
