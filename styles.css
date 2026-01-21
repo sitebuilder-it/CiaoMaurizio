@@ -474,16 +474,17 @@ footer {
   height: 80px;
   background: #111;
   color: #f4f4f4;
-  display: flex;
+
+  display: none;              /* footer does NOT exist by default */
   align-items: center;
   justify-content: center;
+
   z-index: 900;
-  opacity: 0;
   pointer-events: none;
 }
 
 footer.visible {
-  opacity: 1;
+  display: flex;              /* footer exists ONLY on contact */
   pointer-events: auto;
 }
 
@@ -516,6 +517,7 @@ footer a:hover {
   font-size: 0.65rem;
   opacity: 0.45;
 }
+
 
 /* ================= SCROLL HINT ================= */
 .scroll-hint {
@@ -653,5 +655,6 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
 
