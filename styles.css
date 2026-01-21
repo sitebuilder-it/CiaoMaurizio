@@ -195,40 +195,31 @@ nav.invert .menu-toggle span {
 }
 
 
-
-/* snap 2: text only */
-.reviews-mobile-text {
-  background: #f4f4f4;
-  color: #000;
-}
-
-/* ================= REVIEWS – MOBILE TEXT (TRUE CENTERED IN VISIBLE AREA) ================= */
+/* ================= MOBILE REVIEWS – TRUE FULLSCREEN FIX ================= */
 @media (max-width: 768px) {
-  .reviews-mobile-text {
-    background: #f4f4f4;
-    color: #000;
 
-    /* make the section itself do the centering */
+  /* Ensure every snap truly fills the visible viewport on iOS */
+  .snap {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  /* Reviews text section: real fullscreen, no toolbar gaps */
+  .reviews-mobile-text {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    /* iOS-correct viewport */
-    min-height: 100vh;
-    padding-left: 22px;
-    padding-right: 22px;
+    height: 100vh;   /* fallback */
+    height: 100svh;  /* iOS stable */
+    height: 100dvh;  /* iOS dynamic */
 
-    /* compensate for fixed footer so the "visible" area is centered */
-    padding-top: 64px;
-    padding-bottom: calc(64px + 80px + env(safe-area-inset-bottom));
+    background: #f4f4f4;
+    color: #000;
 
+    padding: 0 22px;
     box-sizing: border-box;
-  }
-
-  @supports (height: 100svh) {
-    .reviews-mobile-text {
-      min-height: 100svh;
-    }
   }
 
   .reviews-mobile-text .reviews-text {
@@ -244,6 +235,13 @@ nav.invert .menu-toggle span {
 
   .reviews-mobile-text .reviews-text p + p {
     margin-top: 18px;
+  }
+
+  /* Portrait section also must be true fullscreen */
+  .reviews-mobile-portrait {
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
   }
 }
 
@@ -427,7 +425,6 @@ nav.invert .menu-toggle span {
   padding-top: 80px;
   padding-bottom: env(safe-area-inset-bottom);
 }
-
 
 .contact-container {
   max-width: 520px;
@@ -698,7 +695,4 @@ footer a:hover {
     object-position: center top;
   }
 }
-
-
-
 
