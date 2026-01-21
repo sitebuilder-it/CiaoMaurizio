@@ -184,26 +184,30 @@ nav.invert .menu-toggle span {
     background-repeat: no-repeat;
   }
 
-  /* snap 2: text only, FULL SCREEN, WHITE BG, centered horizontally + vertically */
+  /* snap 2: text only, FULL SCREEN, WHITE BG, centered with 20px top offset */
   .reviews-mobile-text {
     background: #ffffff;
     color: #000;
 
     display: flex;
-    align-items: center;      /* vertical center */
-    justify-content: center;  /* horizontal center */
+    align-items: center;
+    justify-content: center;
 
     min-height: 100vh;   /* fallback */
     min-height: 100svh;
     min-height: 100dvh;
 
-    padding: 0 22px;
+    padding-top: 20px;     /* ⬅️ requested offset */
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 0;
+
     box-sizing: border-box;
   }
 
   /* readable centered text column */
   .reviews-mobile-text .reviews-text {
-    width: min(90vw, 38ch); /* controls line length on phones */
+    width: min(90vw, 38ch);
     margin: 0 auto;
     padding: 0;
 
@@ -220,6 +224,7 @@ nav.invert .menu-toggle span {
     margin-top: 18px;
   }
 }
+
 
 
 /* ================= VIDEO ================= */
@@ -670,4 +675,5 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
