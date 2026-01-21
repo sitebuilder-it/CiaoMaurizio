@@ -207,58 +207,6 @@ function safePlay(video) {
   } catch (_) {}
 }
 
-// ====== HERO AUTOPLAY + FIRST VISIT AUTO-SCROLL (MOBILE ONLY) ======
-let heroSequenceActive = false;
-
-(() => {
-  if (!window.matchMedia('(max-width: 768px)').matches) return;
-
-  const hero = document.getElementById('hero');
-  const video = hero?.querySelector('video');
-  if (!hero || !video || !scroll || !intro) return;
-
-  const FIRST_VISIT_KEY = 'heroPlayedOnce';
-
-  prepVideo(video);
-
-  const playHero = () => safePlay(video);
-
-  // Always attempt play when available
-  playHero();
-
-  // Play again after first user interaction (Safari fallback)
-  ['touchstart', 'click'].forEach(evt => {
-    window.addEventListener(evt, playHero, { once: true, passive: true });
-  });
-
-  // First visit: play once, then scroll, then allow looping afterwards
-  if (!localStorage.getItem(FIRST_VISIT_KEY)) {
-    heroSequenceActive = true;
-    video.loop = false;
-
-    const finishFirstVisit = () => {
-      if (!heroSequenceActive) return;
-      heroSequenceActive = false;
-      localStorage.setItem(FIRST_VISIT_KEY, 'true');
-
-      scroll.scrollTo({
-        top: intro.offsetTop,
-        behavior: 'smooth'
-      });
-
-      video.loop = true;
-      playHero();
-    };
-
-    // If video ends, scroll
-    video.addEventListener('ended', finishFirstVisit, { once: true });
-
-    // Safety fallback: if autoplay fails or video is too long, scroll anyway
-    setTimeout(finishFirstVisit, 8000);
-  } else {
-    video.loop = true;
-  }
-})();
 
 // ====== MOBILE SNAP VIDEOS: PAUSE MANAGEMENT + RESET ON REAL ENTRY ======
 (() => {
@@ -290,12 +238,6 @@ let heroSequenceActive = false;
         const video = sec.querySelector('video');
         if (!video) return;
 
-        // While first-visit hero sequence is active, do not pause/reset the hero from observer jitter
-        if (heroSequenceActive && sec.id === 'hero') {
-          if (entry.isIntersecting) safePlay(video);
-          return;
-        }
-
         if (entry.isIntersecting) {
           pauseAllExcept(video);
 
@@ -309,13 +251,12 @@ let heroSequenceActive = false;
 
           safePlay(video);
         } else {
-  // Mark as resettable only when mostly out of view
-  if (entry.intersectionRatio < 0.1) {
-    canReset.set(sec, true);
-  }
-  try { video.pause(); } catch (_) {}
-}
-
+          // Mark as resettable only when mostly out of view
+          if (entry.intersectionRatio < 0.1) {
+            canReset.set(sec, true);
+          }
+          try { video.pause(); } catch (_) {}
+        }
       });
     },
     { root: scroll, threshold: 0.65 }
