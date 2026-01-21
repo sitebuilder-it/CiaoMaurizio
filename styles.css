@@ -185,7 +185,7 @@ nav.invert .menu-toggle span {
     background-repeat: no-repeat;
   }
 
-  /* snap 2: text only, centered without breaking header/menu */
+ @media (max-width: 768px) {
   .reviews-mobile-text {
     background: #f4f4f4;
     color: #000;
@@ -194,26 +194,30 @@ nav.invert .menu-toggle span {
     align-items: center;
     justify-content: center;
 
-    min-height: 100vh;  /* stable fallback */
+    /* force true fullscreen on mobile, prefer modern units */
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+
     padding: 0 22px;
     box-sizing: border-box;
   }
 
-  /* Use visible viewport height when supported (iOS Safari) */
-  @supports (height: 100svh) {
-    .reviews-mobile-text {
-      min-height: 100svh;
-    }
+  /* If the footer can appear on this section, center within the visible area */
+  footer.visible ~ .main-scroll .reviews-mobile-text,
+  .main-scroll:has(footer.visible) .reviews-mobile-text {
+    min-height: calc(100dvh - 80px);
+    min-height: calc(100svh - 80px);
+    min-height: calc(100vh - 80px);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .reviews-mobile-text .reviews-text {
     width: 100%;
-    max-width: 640px;
-    margin: 0;
-    padding: 0;
-
+    max-width: 38ch;     /* this is what makes the text “format nicely” */
+    margin: 0 auto;
     text-align: center;
-    line-height: 1.6;
+    line-height: 1.65;
     font-size: 1rem;
   }
 
@@ -221,6 +225,7 @@ nav.invert .menu-toggle span {
     margin-top: 18px;
   }
 }
+
 
 /* ================= VIDEO ================= */
 
@@ -670,4 +675,5 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
