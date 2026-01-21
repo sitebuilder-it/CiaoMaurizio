@@ -424,10 +424,10 @@ nav.invert .menu-toggle span {
   background: #ffffff;
   color: #111;
 
-  /* balance fixed footer */
   padding-top: 80px;
-  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
 }
+
 
 .contact-container {
   max-width: 520px;
@@ -697,5 +697,6 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
 
