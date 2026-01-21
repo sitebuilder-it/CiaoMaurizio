@@ -169,27 +169,22 @@ nav.invert .menu-toggle span {
   margin-top: 14px;
 }
 
-/* ================= MOBILE ================= */
 @media (max-width: 768px) {
   .reviews-mobile-text {
     background: #ffffff;
     color: #000;
 
-    height: 100dvh; /* lock fullscreen, no leaks when toolbar hides */
-    display: block; /* NO vertical centering */
+    min-height: 100svh; /* stable mobile viewport */
+    display: flex;
+    align-items: center;      /* vertical center */
+    justify-content: center;  /* horizontal center */
 
-    padding-top: 18vh; /* fake optical center */
-    padding-left: 22px;
-    padding-right: 22px;
-    padding-bottom: 0;
-
+    padding: 0 22px;
     box-sizing: border-box;
   }
 
   .reviews-mobile-text .reviews-text {
     width: min(90vw, 36ch);
-    margin: 0 auto;
-
     text-align: center;
     line-height: 1.6;
     font-size: 1rem;
@@ -203,7 +198,6 @@ nav.invert .menu-toggle span {
     margin-top: 16px;
   }
 }
-
 
 /* ================= VIDEO ================= */
 
@@ -518,7 +512,6 @@ footer a:hover {
   opacity: 0.45;
 }
 
-
 /* ================= SCROLL HINT ================= */
 .scroll-hint {
   position: absolute;
@@ -655,6 +648,4 @@ footer a:hover {
     object-position: center top;
   }
 }
-
-
 
