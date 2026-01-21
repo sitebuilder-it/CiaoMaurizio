@@ -171,49 +171,36 @@ nav.invert .menu-toggle span {
 
 /* ================= MOBILE ================= */
 @media (max-width: 768px) {
-  /* snap 1: portrait only (safe fullscreen on mobile) */
-  .reviews-mobile-portrait {
-    width: 100vw;
-    min-height: 100vh;   /* fallback */
-    min-height: 100svh;  /* small viewport height */
-    min-height: 100dvh;  /* dynamic viewport height */
-
-    background-image: url("img/portrait.jpg");
-    background-size: cover;
-    background-position: 50% 20%;
-    background-repeat: no-repeat;
-  }
-
-  /* snap 2: text only, FULL SCREEN, WHITE BG, centered with 20px top offset */
   .reviews-mobile-text {
-    background: #ffffff;
+    background: #fff;
     color: #000;
 
-    display: flex;
+    height: 100dvh;      /* real fullscreen on mobile */
+    display: flex !important;
     align-items: center;
     justify-content: center;
 
-    min-height: 100vh;   /* fallback */
-    min-height: 100svh;
-    min-height: 100dvh;
-
-    padding-top: 20px;     /* ⬅️ requested offset */
-    padding-left: 22px;
-    padding-right: 22px;
-    padding-bottom: 0;
-
+    padding: 20px 22px;  /* 20px top included */
     box-sizing: border-box;
   }
 
-  /* readable centered text column */
   .reviews-mobile-text .reviews-text {
-    width: min(90vw, 38ch);
+    width: min(90vw, 36ch);
     margin: 0 auto;
-    padding: 0;
 
     text-align: center;
-    line-height: 1.65;
-    font-size: 1rem;
+    line-height: 1.6;
+    font-size: 0.96rem;
+
+    /* key: if content is taller than the screen, scroll inside */
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .reviews-mobile-text .reviews-text::-webkit-scrollbar {
+    display: none;
   }
 
   .reviews-mobile-text .reviews-text p {
@@ -221,9 +208,10 @@ nav.invert .menu-toggle span {
   }
 
   .reviews-mobile-text .reviews-text p + p {
-    margin-top: 18px;
+    margin-top: 16px;
   }
 }
+
 
 
 
@@ -675,5 +663,6 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
 
