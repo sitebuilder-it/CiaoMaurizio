@@ -173,59 +173,38 @@ nav.invert .menu-toggle span {
 /* ================= MOBILE ================= */
 
 /* snap 1: portrait only (iOS Safari safe fullscreen) */
-.reviews-mobile-portrait {
-  width: 100vw;
-  height: 100vh;     /* fallback */
-  height: 100svh;    /* stable visible height (no jump when bars hide) */
-  height: 100dvh;    /* dynamic height (fills when bars collapse) */
-
-  background-image: url("img/portrait.jpg");
-  background-size: cover;
-  background-position: 50% 20%;
-  background-repeat: no-repeat;
-
-  display: flex;
-}
 @media (max-width: 768px) {
-  .snap {
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
+  .reviews-mobile-portrait {
+    width: 100vw;
+    height: 100vh;   /* fallback */
+    height: 100dvh;  /* best for toolbar hide/show */
+
+    background-image: url("img/portrait.jpg");
+    background-size: cover;
+    background-position: 50% 20%;
+    background-repeat: no-repeat;
   }
-}
 
-
-/* ================= REVIEWS – MOBILE TEXT (CENTERED) ================= */
-@media (max-width: 768px) {
+  /* snap 2: text only, centered in visible viewport */
   .reviews-mobile-text {
-    background: #f4f4f4;
-    color: #000;
-
     display: flex;
     align-items: center;
     justify-content: center;
 
-    /* iOS-safe viewport */
-    min-height: 100vh;
+    height: 100svh;  /* centers within visible viewport on iOS */
     padding: 0 22px;
     box-sizing: border-box;
+
+    background: #f4f4f4;
+    color: #000;
   }
 
-  @supports (height: 100svh) {
-    .reviews-mobile-text {
-      min-height: 100svh;
-    }
-  }
-
-  /* Symmetric breathing room top and bottom */
   .reviews-mobile-text .reviews-text {
     width: 100%;
     max-width: 640px;
-
-    padding: calc(22px + env(safe-area-inset-top)) 0
-             calc(22px + env(safe-area-inset-bottom)) 0;
-
     margin: 0;
+    padding: 0;
+
     text-align: center;
     line-height: 1.6;
     font-size: 1rem;
@@ -235,7 +214,6 @@ nav.invert .menu-toggle span {
     margin-top: 18px;
   }
 }
-
 
 /* ================= VIDEO ================= */
 
