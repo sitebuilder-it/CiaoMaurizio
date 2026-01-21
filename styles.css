@@ -123,7 +123,6 @@ nav.invert .menu-toggle span {
   width: 80%;
   margin-bottom: 20px;
 }
-
 /* ================= REVIEWS ================= */
 /* DESKTOP: full screen background portrait + text on right */
 .reviews-desktop {
@@ -171,13 +170,13 @@ nav.invert .menu-toggle span {
 }
 
 /* ================= MOBILE ================= */
-
-/* snap 1: portrait only (iOS Safari safe fullscreen) */
 @media (max-width: 768px) {
+  /* snap 1: portrait only (safe fullscreen on mobile) */
   .reviews-mobile-portrait {
     width: 100vw;
-    min-height: 100vh;  /* fallback */
-    min-height: 100dvh; /* fills visible area when Safari bars collapse */
+    min-height: 100vh;   /* fallback */
+    min-height: 100svh;  /* small viewport height */
+    min-height: 100dvh;  /* dynamic viewport height */
 
     background-image: url("img/portrait.jpg");
     background-size: cover;
@@ -185,17 +184,16 @@ nav.invert .menu-toggle span {
     background-repeat: no-repeat;
   }
 
- @media (max-width: 768px) {
+  /* snap 2: text only, FULL SCREEN, WHITE BG, centered horizontally + vertically */
   .reviews-mobile-text {
-    background: #f4f4f4;
+    background: #ffffff;
     color: #000;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;      /* vertical center */
+    justify-content: center;  /* horizontal center */
 
-    /* force true fullscreen on mobile, prefer modern units */
-    min-height: 100vh;
+    min-height: 100vh;   /* fallback */
     min-height: 100svh;
     min-height: 100dvh;
 
@@ -203,22 +201,19 @@ nav.invert .menu-toggle span {
     box-sizing: border-box;
   }
 
-  /* If the footer can appear on this section, center within the visible area */
-  footer.visible ~ .main-scroll .reviews-mobile-text,
-  .main-scroll:has(footer.visible) .reviews-mobile-text {
-    min-height: calc(100dvh - 80px);
-    min-height: calc(100svh - 80px);
-    min-height: calc(100vh - 80px);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
+  /* readable centered text column */
   .reviews-mobile-text .reviews-text {
-    width: 100%;
-    max-width: 38ch;     /* this is what makes the text “format nicely” */
+    width: min(90vw, 38ch); /* controls line length on phones */
     margin: 0 auto;
+    padding: 0;
+
     text-align: center;
     line-height: 1.65;
     font-size: 1rem;
+  }
+
+  .reviews-mobile-text .reviews-text p {
+    margin: 0;
   }
 
   .reviews-mobile-text .reviews-text p + p {
@@ -675,5 +670,4 @@ footer a:hover {
     object-position: center top;
   }
 }
-
 
