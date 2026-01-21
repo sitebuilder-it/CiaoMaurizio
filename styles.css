@@ -173,25 +173,30 @@ nav.invert .menu-toggle span {
 /* ================= MOBILE ================= */
 
 /* snap 1: portrait only (iOS Safari safe fullscreen) */
+.reviews-mobile-portrait {
+  width: 100vw;
+  height: 100vh;     /* fallback */
+  height: 100svh;    /* stable visible height (no jump when bars hide) */
+  height: 100dvh;    /* dynamic height (fills when bars collapse) */
+
+  background-image: url("img/portrait.jpg");
+  background-size: cover;
+  background-position: 50% 20%;
+  background-repeat: no-repeat;
+
+  display: flex;
+}
+
+
+/* ================= REVIEWS – MOBILE TEXT (CENTERED) ================= */
+/* MOBILE: reviews text, true centering in the visible viewport (iOS Safari) */
 @media (max-width: 768px) {
-  .reviews-mobile-portrait {
-    width: 100vw;
-    height: 100vh;   /* fallback */
-    height: 100dvh;  /* best for toolbar hide/show */
-
-    background-image: url("img/portrait.jpg");
-    background-size: cover;
-    background-position: 50% 20%;
-    background-repeat: no-repeat;
-  }
-
-  /* snap 2: text only, centered in visible viewport */
   .reviews-mobile-text {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    height: 100svh;  /* centers within visible viewport on iOS */
+    height: 100svh;          /* visible viewport height (fixes bottom white gap) */
     padding: 0 22px;
     box-sizing: border-box;
 
