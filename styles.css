@@ -195,39 +195,37 @@ nav.invert .menu-toggle span {
 }
 
 
-/* ================= MOBILE REVIEWS – TRUE FULLSCREEN FIX ================= */
+/* ================= REVIEWS – MOBILE TEXT (CENTERED) ================= */
 @media (max-width: 768px) {
-
-  /* Ensure every snap truly fills the visible viewport on iOS */
-  .snap {
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
-  }
-
-  /* Reviews text section: real fullscreen, no toolbar gaps */
   .reviews-mobile-text {
+    background: #f4f4f4;
+    color: #000;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    height: 100vh;   /* fallback */
-    height: 100svh;  /* iOS stable */
-    height: 100dvh;  /* iOS dynamic */
-
-    background: #f4f4f4;
-    color: #000;
-
+    /* iOS-safe viewport */
+    min-height: 100vh;
     padding: 0 22px;
     box-sizing: border-box;
   }
 
+  @supports (height: 100svh) {
+    .reviews-mobile-text {
+      min-height: 100svh;
+    }
+  }
+
+  /* Symmetric breathing room top and bottom */
   .reviews-mobile-text .reviews-text {
     width: 100%;
     max-width: 640px;
-    margin: 0;
-    padding: 0;
 
+    padding: calc(22px + env(safe-area-inset-top)) 0
+             calc(22px + env(safe-area-inset-bottom)) 0;
+
+    margin: 0;
     text-align: center;
     line-height: 1.6;
     font-size: 1rem;
@@ -235,13 +233,6 @@ nav.invert .menu-toggle span {
 
   .reviews-mobile-text .reviews-text p + p {
     margin-top: 18px;
-  }
-
-  /* Portrait section also must be true fullscreen */
-  .reviews-mobile-portrait {
-    height: 100vh;
-    height: 100svh;
-    height: 100dvh;
   }
 }
 
