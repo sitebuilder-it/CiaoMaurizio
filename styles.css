@@ -34,6 +34,13 @@ body {
   align-items: center;
   justify-content: center;
 }
+@media (max-width: 768px) {
+  .main-scroll { height: 100svh; }
+  .snap { min-height: 100svh; }
+  .hero video { height: 100svh; }
+  .video-reel, .podcast-reel { height: 100svh; }
+  #podcast-banner .podcast-banner { height: 100svh; }
+}
 
 /* ================= MENU ================= */
 nav {
@@ -375,14 +382,15 @@ nav.invert .menu-toggle span {
   background: #ffffff;
   color: #111;
 
-  padding-top: 80px;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .contact-container {
   max-width: 520px;
   width: 100%;
   padding: 48px 24px;
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
   text-align: center;
 }
 
@@ -439,13 +447,17 @@ nav.invert .menu-toggle span {
 /* Mobile refinement */
 @media (max-width: 768px) {
   .contact-section {
-    padding-top: 72px;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 
   .contact-container {
-    padding: 40px 20px;
-  }
+  padding: 40px 20px;
+  padding-top: 72px;
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+
 
   .contact-title {
     font-size: 2.15rem;
@@ -648,4 +660,5 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
