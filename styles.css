@@ -172,13 +172,12 @@ nav.invert .menu-toggle span {
 
 /* ================= MOBILE ================= */
 
-/* MOBILE: snap 1 portrait only – true fullscreen */
+/* snap 1: portrait only (iOS Safari safe fullscreen) */
 .reviews-mobile-portrait {
   width: 100vw;
-
-  /* iOS-safe fullscreen */
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100vh;     /* fallback */
+  height: 100svh;    /* stable visible height (no jump when bars hide) */
+  height: 100dvh;    /* dynamic height (fills when bars collapse) */
 
   background-image: url("img/portrait.jpg");
   background-size: cover;
@@ -187,6 +186,14 @@ nav.invert .menu-toggle span {
 
   display: flex;
 }
+@media (max-width: 768px) {
+  .snap {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+}
+
 
 
 /* snap 2: text only */
@@ -690,4 +697,5 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
