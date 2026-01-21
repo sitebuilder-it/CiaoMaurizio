@@ -172,15 +172,17 @@ nav.invert .menu-toggle span {
 /* ================= MOBILE ================= */
 @media (max-width: 768px) {
   .reviews-mobile-text {
-    background: #fff;
+    background: #ffffff;
     color: #000;
 
-    height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100dvh; /* lock fullscreen, no leaks when toolbar hides */
+    display: block; /* NO vertical centering */
 
-    padding: 0 22px;
+    padding-top: 18vh; /* fake optical center */
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 0;
+
     box-sizing: border-box;
   }
 
@@ -191,14 +193,15 @@ nav.invert .menu-toggle span {
     text-align: center;
     line-height: 1.6;
     font-size: 1rem;
-
-    max-height: 80dvh;          /* ensures it can be centered */
-    overflow-y: auto;           /* scrolls only if needed */
-    -webkit-overflow-scrolling: touch;
   }
 
-  .reviews-mobile-text .reviews-text p { margin: 0; }
-  .reviews-mobile-text .reviews-text p + p { margin-top: 16px; }
+  .reviews-mobile-text .reviews-text p {
+    margin: 0;
+  }
+
+  .reviews-mobile-text .reviews-text p + p {
+    margin-top: 16px;
+  }
 }
 
 
@@ -650,4 +653,5 @@ footer a:hover {
     object-position: center top;
   }
 }
+
 
