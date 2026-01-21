@@ -173,35 +173,37 @@ nav.invert .menu-toggle span {
 /* ================= MOBILE ================= */
 
 /* snap 1: portrait only (iOS Safari safe fullscreen) */
-.reviews-mobile-portrait {
-  width: 100vw;
-  height: 100vh;     /* fallback */
-  height: 100svh;    /* stable visible height (no jump when bars hide) */
-  height: 100dvh;    /* dynamic height (fills when bars collapse) */
-
-  background-image: url("img/portrait.jpg");
-  background-size: cover;
-  background-position: 50% 20%;
-  background-repeat: no-repeat;
-
-  display: flex;
-}
-
-
-/* ================= REVIEWS – MOBILE TEXT (CENTERED) ================= */
-/* MOBILE: reviews text, true centering in the visible viewport (iOS Safari) */
 @media (max-width: 768px) {
+  .reviews-mobile-portrait {
+    width: 100vw;
+    min-height: 100vh;  /* fallback */
+    min-height: 100dvh; /* fills visible area when Safari bars collapse */
+
+    background-image: url("img/portrait.jpg");
+    background-size: cover;
+    background-position: 50% 20%;
+    background-repeat: no-repeat;
+  }
+
+  /* snap 2: text only, centered without breaking header/menu */
   .reviews-mobile-text {
+    background: #f4f4f4;
+    color: #000;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    height: 100svh;          /* visible viewport height (fixes bottom white gap) */
+    min-height: 100vh;  /* stable fallback */
     padding: 0 22px;
     box-sizing: border-box;
+  }
 
-    background: #f4f4f4;
-    color: #000;
+  /* Use visible viewport height when supported (iOS Safari) */
+  @supports (height: 100svh) {
+    .reviews-mobile-text {
+      min-height: 100svh;
+    }
   }
 
   .reviews-mobile-text .reviews-text {
@@ -463,7 +465,6 @@ nav.invert .menu-toggle span {
     padding-top: 72px;
     padding-bottom: env(safe-area-inset-bottom);
   }
-}
 
   .contact-container {
     padding: 40px 20px;
