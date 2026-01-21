@@ -96,6 +96,12 @@ nav.invert a {
 nav.invert .menu-toggle span {
   background: #000;
 }
+.hero {
+  position: relative;
+}
+.snap:not(#hero) .scroll-hint {
+  display: none;
+}
 
 /* ================= HERO ================= */
 .hero video {
@@ -166,15 +172,22 @@ nav.invert .menu-toggle span {
 
 /* ================= MOBILE ================= */
 
-/* snap 1: portrait only */
+/* MOBILE: snap 1 portrait only – true fullscreen */
 .reviews-mobile-portrait {
   width: 100vw;
-  height: 100vh;
+
+  /* iOS-safe fullscreen */
+  min-height: 100vh;
+  min-height: 100svh;
+
   background-image: url("img/portrait.jpg");
   background-size: cover;
   background-position: 50% 20%;
   background-repeat: no-repeat;
+
+  display: flex;
 }
+
 
 /* snap 2: text only */
 .reviews-mobile-text {
