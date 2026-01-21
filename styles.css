@@ -1,0 +1,680 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: #000;
+  color: #f4f4f4;
+}
+
+.main-scroll {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.main-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.snap {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= MENU ================= */
+nav {
+  position: fixed;
+  top: 20px;
+  right: 28px;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+}
+
+nav.visible {
+  display: flex;
+}
+
+.menu-toggle {
+  width: 28px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-left: -10px;
+}
+
+.menu-toggle span {
+  height: 2px;
+  width: 100%;
+  background: #fff;
+  display: block;
+}
+
+nav ul {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-right: 22px;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: right center;
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  white-space: nowrap;
+}
+
+nav.open ul {
+  transform: translateY(-50%) scaleX(1);
+}
+
+nav a {
+  color: #f4f4f4;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+nav.invert a {
+  color: #000;
+}
+
+nav.invert .menu-toggle span {
+  background: #000;
+}
+
+/* ================= HERO ================= */
+.hero video {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* ================= INTRO ================= */
+.intro {
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+.intro-logo {
+  max-width: 300px;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+/* ================= REVIEWS ================= */
+/* DESKTOP: full screen background portrait + text on right */
+.reviews-desktop {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0;
+  color: #fff;
+  overflow: hidden;
+}
+
+.reviews-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+  z-index: 0;
+}
+
+/* TEXT PLACEMENT ONLY */
+.reviews-overlay {
+  position: absolute;
+  top: 50%;
+  right: 48px;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: min(480px, 32vw);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+}
+
+.reviews-text {
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1.02rem;
+}
+
+.reviews-text p + p {
+  margin-top: 14px;
+}
+
+/* ================= MOBILE ================= */
+
+/* snap 1: portrait only */
+.reviews-mobile-portrait {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("img/portrait.jpg");
+  background-size: cover;
+  background-position: 50% 20%;
+  background-repeat: no-repeat;
+}
+
+/* snap 2: text only */
+.reviews-mobile-text {
+  background: #f4f4f4;
+  color: #000;
+}
+
+/* ================= REVIEWS – MOBILE TEXT (TRUE CENTERED IN VISIBLE AREA) ================= */
+@media (max-width: 768px) {
+  .reviews-mobile-text {
+    background: #f4f4f4;
+    color: #000;
+
+    /* make the section itself do the centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* iOS-correct viewport */
+    min-height: 100vh;
+    padding-left: 22px;
+    padding-right: 22px;
+
+    /* compensate for fixed footer so the "visible" area is centered */
+    padding-top: 64px;
+    padding-bottom: calc(64px + 80px + env(safe-area-inset-bottom));
+
+    box-sizing: border-box;
+  }
+
+  @supports (height: 100svh) {
+    .reviews-mobile-text {
+      min-height: 100svh;
+    }
+  }
+
+  .reviews-mobile-text .reviews-text {
+    width: 100%;
+    max-width: 640px;
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .reviews-mobile-text .reviews-text p + p {
+    margin-top: 18px;
+  }
+}
+
+
+/* ================= VIDEO ================= */
+
+.video-reel {
+  width: 100%;
+  height: 100vh;
+}
+
+.snap > .video-reel {
+  align-self: stretch;
+}
+
+/* ================= PHOTO CAROUSEL ================= */
+.snap.photo {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.photo-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.photo-layer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.photo-layer img {
+  max-height: 78vh;
+  max-width: 78vw;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+/* Desktop layout, center + peeks */
+@media (min-width: 769px) {
+  .photo-layer[data-pos="0"] {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .photo-layer[data-pos="-1"] {
+    left: 15%;
+    z-index: 2;
+    opacity: 0.55;
+    filter: blur(0.2px);
+  }
+
+  .photo-layer[data-pos="1"] {
+    right: 15%;
+    z-index: 2;
+    opacity: 0.55;
+    filter: blur(0.2px);
+  }
+
+  .photo-layer[data-pos="-1"] img,
+  .photo-layer[data-pos="1"] img {
+    max-height: 70vh;
+    max-width: 62vw;
+  }
+}
+
+/* Mobile layout, single centered slide */
+@media (max-width: 768px) {
+  .photo-layer {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+  }
+
+  .photo-layer img {
+    max-height: 76vh;
+    max-width: 92vw;
+  }
+
+  .photo-layer[data-pos="-1"],
+  .photo-layer[data-pos="1"] {
+    opacity: 0;
+  }
+}
+
+/* Dots indicator */
+.photo-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.photo-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.35);
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  opacity: 0.9;
+}
+
+.photo-dots .dot.active {
+  background: rgba(255,255,255,0.9);
+  transform: scale(1.35);
+}
+
+#photo {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+#photo:active {
+  cursor: grabbing;
+}
+
+#photo img {
+  pointer-events: none;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+#photo,
+#photo * {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Hide arrows entirely (HTML can keep them, they won't show) */
+.photo-arrow {
+  display: none;
+}
+
+/* Keep dots visible above footer on mobile */
+@media (max-width: 768px) {
+  .photo-dots {
+    bottom: calc(90px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ================= PODCAST ================= */
+.podcast-banner img { width: 100%; }
+.podcast-reel { width: 100%; height: 100vh; }
+
+.snap > .podcast-reel {
+  align-self: stretch;
+}
+
+.podcast-banner img.desktop { display: block; }
+.podcast-banner img.mobile { display: none; }
+
+@media (max-width: 768px) {
+  .podcast-banner img.desktop { display: none; }
+  .podcast-banner img.mobile { display: block; }
+}
+
+/* ================= CONTACT (LIGHT THEME) ================= */
+.contact-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #111;
+
+  /* balance fixed footer */
+  padding-top: 80px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+
+.contact-container {
+  max-width: 520px;
+  width: 100%;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+/* Title */
+.contact-title {
+  font-size: 2.35rem;
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+
+/* Intro text */
+.contact-intro {
+  margin: 0 0 32px;
+  line-height: 1.6;
+  font-size: 1.05rem;
+  opacity: 0.9;
+  color: #222;
+}
+
+/* Email */
+.contact-email {
+  margin-bottom: 32px;
+}
+
+.contact-email a {
+  color: #111;
+  text-decoration: none;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+.contact-email a:hover {
+  opacity: 1;
+}
+
+/* Logo (closing signature) */
+.contact-logo {
+  display: block;
+  margin: 32px auto 0;
+  width: 140px;
+  opacity: 0.55;
+}
+
+@media (hover: hover) {
+  .contact-logo {
+    transition: opacity 0.2s ease;
+  }
+
+  .contact-logo:hover {
+    opacity: 0.75;
+  }
+}
+
+/* Mobile refinement */
+@media (max-width: 768px) {
+  .contact-section {
+    padding-top: 72px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+
+  .contact-container {
+    padding: 40px 20px;
+  }
+
+  .contact-title {
+    font-size: 2.15rem;
+    margin-bottom: 28px;
+  }
+
+  .contact-intro,
+  .contact-email a {
+    font-size: 1rem;
+  }
+}
+
+
+/* ================= FOOTER ================= */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #111;
+  color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  opacity: 0;
+  pointer-events: none;
+}
+
+footer.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Footer layout for links + copyright + credit */
+#footer {
+  flex-direction: column;
+}
+
+.footer-links {
+  line-height: 1.2;
+}
+
+.footer-copyright {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.footer-credit {
+  margin-top: 2px;
+  font-size: 0.65rem;
+  opacity: 0.45;
+}
+
+/* ================= SCROLL HINT ================= */
+.scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  cursor: pointer;
+}
+
+.scroll-hint span {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-right: 2px solid rgba(255,255,255,0.5);
+  border-bottom: 2px solid rgba(255,255,255,0.5);
+  transform: rotate(45deg);
+  animation: scrollHint 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollHint {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(0, 0);
+  }
+  30% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+}
+
+/* show one version per breakpoint */
+.mobile-only { display: block; }
+.desktop-only { display: none; }
+
+@media (min-width: 769px) {
+  .mobile-only { display: none; }
+  .desktop-only { display: flex; }
+}
+
+/* ================= DESKTOP REELS ================= */
+@media (min-width: 769px) {
+  .snap.desktop-only {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .reels-row {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 32px;
+    box-sizing: border-box;
+    background: #000;
+  }
+
+  .reel-cell {
+    aspect-ratio: 9 / 16;
+    height: 100%;
+    max-height: 90vh;
+    flex: 0 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border-radius: 18px;
+  }
+
+  .reel-cell video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ================= PODCAST BANNER – FULLSCREEN + TOP VISIBLE ================= */
+#podcast-banner {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+#podcast-banner .podcast-banner {
+  width: 100%;
+  height: 100vh;
+}
+
+#podcast-banner .podcast-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ================= MOBILE: FORCE FULLSCREEN FOR REELS + PODCAST REELS ================= */
+@media (max-width: 768px) {
+  .video-reel,
+  .podcast-reel {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .video-reel .reel-video,
+  .podcast-reel .reel-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+/* ================= MOBILE: PODCAST BANNER IMAGE SELECTOR FIX ================= */
+@media (max-width: 768px) {
+  #podcast-banner .podcast-banner img.desktop { display: none !important; }
+  #podcast-banner .podcast-banner img.mobile  { display: block !important; }
+
+  #podcast-banner .podcast-banner img.mobile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+}
+
