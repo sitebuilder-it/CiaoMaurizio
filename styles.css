@@ -175,12 +175,12 @@ nav.invert .menu-toggle span {
     background: #fff;
     color: #000;
 
-    height: 100dvh;      /* real fullscreen on mobile */
-    display: flex !important;
+    height: 100dvh;
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 20px 22px;  /* 20px top included */
+    padding: 0 22px;
     box-sizing: border-box;
   }
 
@@ -190,29 +190,16 @@ nav.invert .menu-toggle span {
 
     text-align: center;
     line-height: 1.6;
-    font-size: 0.96rem;
+    font-size: 1rem;
 
-    /* key: if content is taller than the screen, scroll inside */
-    max-height: calc(100dvh - 40px);
-    overflow-y: auto;
+    max-height: 80dvh;          /* ensures it can be centered */
+    overflow-y: auto;           /* scrolls only if needed */
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
   }
 
-  .reviews-mobile-text .reviews-text::-webkit-scrollbar {
-    display: none;
-  }
-
-  .reviews-mobile-text .reviews-text p {
-    margin: 0;
-  }
-
-  .reviews-mobile-text .reviews-text p + p {
-    margin-top: 16px;
-  }
+  .reviews-mobile-text .reviews-text p { margin: 0; }
+  .reviews-mobile-text .reviews-text p + p { margin-top: 16px; }
 }
-
-
 
 
 /* ================= VIDEO ================= */
@@ -663,6 +650,4 @@ footer a:hover {
     object-position: center top;
   }
 }
-
-
 
