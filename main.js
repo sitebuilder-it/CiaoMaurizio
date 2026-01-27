@@ -28,7 +28,14 @@ if (scroll) {
 
       e.preventDefault();
 
-      const id = href.slice(1);
+      // Responsive routing for sections that only exist per breakpoint
+      let id = href.slice(1);
+
+      // Video: mobile uses #video, desktop uses #video1
+      if (id === 'video') {
+        id = window.matchMedia('(min-width: 769px)').matches ? 'video1' : 'video';
+      }
+
       const target = document.getElementById(id);
       if (!target) return;
 
