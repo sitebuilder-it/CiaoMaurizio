@@ -550,11 +550,21 @@ footer a:hover {
 /* ================= SCROLL HINT ================= */
 .scroll-hint {
   position: absolute;
-  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;
+  z-index: 50;
   cursor: pointer;
+  pointer-events: auto;
+
+  bottom: 28px; /* desktop fallback */
+}
+
+@media (max-width: 768px) {
+  .hero { overflow: hidden; }
+
+  .scroll-hint {
+    bottom: calc(28px + env(safe-area-inset-bottom) + 18px);
+  }
 }
 
 .scroll-hint span {
@@ -683,3 +693,5 @@ footer a:hover {
     object-position: center top;
   }
 }
+
+
