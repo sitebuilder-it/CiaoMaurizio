@@ -70,6 +70,31 @@ if (scroll && menu && intro) {
 
   scroll.addEventListener('scroll', updateMenu);
   updateMenu(); // IMPORTANT: sets state on load
+
+  // HERO arrow, snap to next section
+  const hero = document.getElementById('hero');
+  if (hero) {
+    const hint = hero.querySelector('.scroll-hint');
+    if (hint) {
+      hint.addEventListener('click', () => {
+        const snaps = Array.from(scroll.querySelectorAll('section.snap'))
+          .filter((sec) => sec.offsetParent !== null);
+
+        if (snaps.length < 2) return;
+
+        const currentTop = scroll.scrollTop;
+
+        // find current snap and move to the next one
+        let i = 0;
+        for (; i < snaps.length; i++) {
+          if (snaps[i].offsetTop >= currentTop - 5) break;
+        }
+
+        const next = snaps[Math.min(i + 1, snaps.length - 1)];
+        scroll.scrollTo({ top: next.offsetTop, behavior: 'smooth' });
+      });
+    }
+  }
 }
 
 // Footer visibility
