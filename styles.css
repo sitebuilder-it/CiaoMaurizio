@@ -177,21 +177,36 @@ nav.invert .menu-toggle span {
 }
 
 @media (max-width: 768px) {
+  /* REVIEWS, MOBILE SNAP 1, portrait image */
+  .reviews-mobile-portrait {
+    width: 100vw;
+    min-height: 100svh;
+    display: block;
+
+    background-image: url("img/portrait.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 20%;
+  }
+
+  /* REVIEWS, MOBILE SNAP 2, text full screen centered */
   .reviews-mobile-text {
+    width: 100vw;
+    min-height: 100svh;
+
     background: #ffffff;
     color: #000;
 
-    min-height: 100svh; /* stable mobile viewport */
     display: flex;
-    align-items: center;      /* vertical center */
-    justify-content: center;  /* horizontal center */
+    align-items: center;
+    justify-content: center;
 
     padding: 0 22px;
     box-sizing: border-box;
   }
 
   .reviews-mobile-text .reviews-text {
-    width: min(90vw, 36ch);
+    width: min(90vw, 38ch);
     text-align: center;
     line-height: 1.6;
     font-size: 1rem;
