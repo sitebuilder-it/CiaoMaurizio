@@ -57,13 +57,28 @@ nav.visible {
 }
 
 .menu-toggle {
+  position: relative;
+
   width: 28px;
   height: 20px;
+
+  /* bigger hit area, same visual size */
+  padding: 14px;
+  box-sizing: content-box;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+
   margin-left: -10px;
+}
+
+/* optional, ensures clicks are captured in the padded area */
+.menu-toggle::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
 }
 
 .menu-toggle span {
