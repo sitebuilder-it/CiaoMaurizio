@@ -191,19 +191,23 @@ nav.invert .menu-toggle span {
 
   /* REVIEWS, MOBILE SNAP 2, text full screen centered */
   .reviews-mobile-text {
-    width: 100vw;
-    min-height: 100svh;
+  width: 100vw;
+  min-height: 100svh;
 
-    background: #ffffff;
-    color: #000;
+  background: #ffffff;
+  color: #000;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  justify-content: flex-start;     /* not vertically centered */
+  align-items: center;             /* keep horizontal centering */
 
-    padding: 0 22px;
-    box-sizing: border-box;
-  }
+  padding-left: 22px;
+  padding-right: 22px;
+  padding-top: calc(72px + env(safe-area-inset-top));
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
 
   .reviews-mobile-text .reviews-text {
   width: min(90vw, 38ch);
@@ -679,5 +683,3 @@ footer a:hover {
     object-position: center top;
   }
 }
-
-
