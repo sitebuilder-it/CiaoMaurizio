@@ -206,11 +206,15 @@ nav.invert .menu-toggle span {
   }
 
   .reviews-mobile-text .reviews-text {
-    width: min(90vw, 38ch);
-    text-align: center;
-    line-height: 1.6;
-    font-size: 1rem;
-  }
+  width: min(90vw, 38ch);
+  margin-left: auto;
+  margin-right: auto;
+
+  text-align: center;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
 
   .reviews-mobile-text .reviews-text p {
     margin: 0;
